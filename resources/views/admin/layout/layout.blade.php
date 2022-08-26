@@ -5,7 +5,7 @@ $logo = App\Models\Setting::where('key', 'logo')->first();
 <html lang="en">
 
 <head>
-    <title>Gaming Portal | Dashboard </title>
+    <title>Video Portal | Dashboard </title>
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -130,6 +130,13 @@ $logo = App\Models\Setting::where('key', 'logo')->first();
                                     <a href="{{ route('admin.category.index') }}">
                                         <span class="pcoded-micon"><i class="fa fa-list"></i></span>
                                         <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Category</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->is('*video*') ? 'active' : '' }}">
+                                    <a href="{{ route('video.index') }}">
+                                        <span class="pcoded-micon"><i class="fa fa-video" aria-hidden="true"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Videos</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>

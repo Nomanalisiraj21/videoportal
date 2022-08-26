@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\VideoController;
 use App\Models\Admin\Category;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\UserController;
@@ -49,6 +50,10 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::resource('admin/game', GameController::class);
     Route::post('admin/game/toggle_mark_new', [GameController::class, 'toggleMarkNew'])->name('admin.game.toggle_mark_new');
     Route::post('admin/game/toggle_mark_popular', [GameController::class, 'toggleMarkPopular'])->name('admin.game.toggle_mark_popular');
+    
+    //Resource for video
+    Route::resource('admin/video', VideoController::class);
+
 
 
     // Customization
