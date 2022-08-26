@@ -96,7 +96,7 @@
 
                                             <div class="form-group">
                                                 <label for="">Index (use to arrange categories in navigation bar)</label>
-                                                <input type="number" name="index" class="form-control" style="width: auto;" value="{{ isset($category)? $category->index: 1 }}" min="1" step="1">
+                                                <input type="number" name="index" class="form-control" style="width: auto;" value="{{ isset($category) ? $category->index : (\App\Models\Admin\Category::count() + 1) }}" min="1" step="1">
                                             </div>
 
                                             <div dir="rtl">

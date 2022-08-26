@@ -133,4 +133,21 @@ class CategoryController extends Controller
         return back()->with('success', 'Category deleted Successfully.');
     }
     
+    /**
+     * update position index of resource
+     */
+    public function position(Request $request)
+    {
+
+        $allData = $request->allData;
+     
+        foreach($allData as $key => $val ){
+            $category = Category::find($val);
+            $category->index = $key+1;
+            $category->update();
+        }
+       
+        return response()->json('Position Change Successfully');
+    }
+    
 }

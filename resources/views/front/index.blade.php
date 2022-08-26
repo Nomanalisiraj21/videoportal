@@ -61,7 +61,7 @@ $theme = session()->get('theme') ?? ($theme_key ? $theme_key->value : '');
         <!-- Popular games -->
         <div class="row mb-3 {{ $theme && $theme == 'light' ? 'text-dark' : 'text-white' }}">
             <div class="col-11">
-                <h3 class="h4 d-flex"><i class="fa fa-certificate mx-2" aria-hidden="true"></i>{{ $lang && $lang == 'ar' ? 'الألعاب الشعبية' : 'POPULAR GAMES' }}</h3>
+                <h3 class="h4 d-flex"><i class="fa fa-certificate mx-2" aria-hidden="true"></i>{{ $lang && $lang == 'ar' ? 'الأكثر شعبية' : 'POPULAR GAMES' }}</h3>
             </div>
             {{-- <div class="col-2">
                 <h3 class="h4 text-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></h3>

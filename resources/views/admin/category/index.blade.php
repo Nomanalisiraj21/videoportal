@@ -63,7 +63,7 @@
                         </button>
                         </div>
                     @endif
-
+                    <div id="position_msg"></div>
                       <div class="table-responsive">
                           <table class="table">
                               <thead>
@@ -77,9 +77,9 @@
                                       <th>Action</th>
                                   </tr>
                               </thead>
-                              <tbody>
+                              <tbody class="row_position">
                                 @foreach($categories as $category)
-                                    <tr>
+                                    <tr id="{{ $category->id ?? 0 }}">
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $category->title ?? '' }}</td>
                                         <td>{{ $category->ar_title ?? '' }}</td>
@@ -137,4 +137,36 @@
 
   </div>
 </div>
+
+{{-- scripts --}}
+
+    <script>
+        $(document).ready(function () {
+            $('.row_position').sortable({
+                delay:150,
+                stop:function(){
+                    var selectedData = new Array();
+                    $('.row_position>tr').each(function(){
+                        selectedData.push($(this).attr("id"));
+                    });
+                    updatePosition(selectedData);
+                }
+            }); 
+            function updatePosition(data_param){
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.category.pos') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "allData":data_param
+                    },
+                    success: function (response) {
+                        $('#position_msg').html('');
+                        $('#position_msg').append('<div class="alert alert-success alert-dismissible fade show" role="alert">'+response+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                    }
+                });
+            }
+        });
+    </script>
+
 @endsection

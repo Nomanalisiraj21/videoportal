@@ -105,24 +105,24 @@ if ($backgroundImage !== null) {
 
                             @auth
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('user-logout') }}"
-                                        class="nav-link">Logout</a> </li>
+                                        class="nav-link">{{ $lang && $lang == 'ar' ? 'تسجيل الخروج' : 'Logout' }}</a> </li>
                             @else
                                 <li class="nav-item"> <a class="nav-link" data-toggle="modal" href="javascript:void(0)"
-                                        onclick="openLoginModal();">Login \ Register</a> </li>
+                                        onclick="openLoginModal();">{{ $lang && $lang == 'ar' ? 'تسجيل الدخول' : 'Login \ Register' }}</a> </li>
                             @endauth
 
                             <!-- Theme Change Button -->
                             @if ($theme && $theme == 'light')
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('home.theme', 'dark') }}"
-                                        id="changeThemeBtn">Dark</a> </li>
+                                        id="changeThemeBtn">{{ $lang && $lang == 'ar' ? 'الوضع المظلم' : 'Dark' }}</a> </li>
                             @else
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('home.theme', 'light') }}"
-                                        id="changeThemeBtn">Light</a> </li>
+                                        id="changeThemeBtn">{{ $lang && $lang == 'ar' ? 'الوضع المضئ' : 'Light' }}</a> </li>
                             @endif
 
                                 <li class="nav-item">
-                                    <a class="mx-1 text-success" href="whatsapp://send?text=Gamebox Play Gmaes Online {{ url()->current() }}')" id="whatsapp"><i class="fa fa-2x fa-whatsapp"></i></a>
-                                    <a class="mx-1 text-white" href="{{ url()->current() }}" id="share"><i class="fa fa-2x fa-share-alt"></i></a>
+                                    <a class="mx-1 text-success" href="whatsapp://send?text=Gamebox Play Gmaes Online {{ url()->current() }}" id="whatsapp"><i class="fa fa-2x fa-whatsapp"></i></a>
+                                    <a class="mx-1 {{ $theme && $theme == 'light' ? 'text-dark' : 'text-white' }}" href="{{ url()->current() }}" id="share"><i class="fa fa-2x fa-share-alt"></i></a>
                                 </li>
                         </ul>
 
@@ -214,17 +214,36 @@ if ($backgroundImage !== null) {
 
             </div>
 
-            <div class="copyright py-4 text-center">
-                <div class="container"> Gamebox © 2022. All rights reserved.</div>
-            </div>
+            <!-- footer -->
+            @php
+                $pages = \App\Models\Page::active()->orderBy('pos')->get();
+            @endphp
+            <footer>
+                <div class="copyright py-4">
+                    <div class="container">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">Gamebox © 2022. All rights reserved.</li>
+                            <li class="list-inline-item">
+                            <ul>
+                            @foreach ($pages as $page)
+                                <li class="list-inline-item"><a href="{{ route('home.page', $page->id) }}">{{ $page->title }}</a></li>
+                            @endforeach
+                            </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+
+            
         </div>
     </div>
     <div class="modal fade login" id="loginModal">
         <div class="modal-dialog login animated">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Login</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ $lang && $lang == 'ar' ? 'تسجيل الدخول' : 'Login' }}</h4>
+                    <button type="button" class="close mx-1" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="box">
@@ -236,7 +255,7 @@ if ($backgroundImage !== null) {
                                         name="phone">
                                     <input id="u_pin" class="form-control" type="password"
                                         placeholder="Pin" name="pin">
-                                    <input class="btn btn-default btn-login" type="submit" value="Login">
+                                    <input class="btn btn-default btn-login" type="submit" value="{{ $lang && $lang == 'ar' ? 'تسجيل الدخول' : 'Login' }}">
                                 </form>
                             </div>
                         </div>

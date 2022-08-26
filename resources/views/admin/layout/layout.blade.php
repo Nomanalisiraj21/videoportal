@@ -149,6 +149,15 @@ $logo = App\Models\Setting::where('key', 'logo')->first();
                                     </a>
                                 </li>
 
+                                <!-- pages -->
+                                <li class="{{ request()->is('*page*') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.page.index') }}">
+                                        <span class="pcoded-micon"><i class="fa fa-file"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Pages</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+
                                 <li class="{{ request()->is('*customize/home-page*') ? 'active' : '' }}">
                                     <a href="{{ route('admin.customize.homepage') }}">
                                         <span class="pcoded-micon"><i class="fa fa-gamepad"></i></span>

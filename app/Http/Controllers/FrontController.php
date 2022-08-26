@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Category;
 use App\Models\Game;
 use App\Models\Slider;
+use App\Models\Page;
 
 class FrontController extends Controller
 {
@@ -95,6 +96,15 @@ class FrontController extends Controller
         $cat = ['title' => 'Popular Games'];
         $cat_games = Game::where('is_popular', 1)->latest()->active()->get();
         return view('front.category',['cat' => $cat, 'cat_games' => $cat_games]);
+    }
+
+    /**
+     * ٍShow custom page
+     */
+    public function page($id)
+    {
+        $page = Page::whereId($id)->active()->first();
+        return view('front.page',['page' => $page]);
     }
 
 }
