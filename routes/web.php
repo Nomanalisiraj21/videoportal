@@ -38,18 +38,19 @@ Route::get('/cmd/{cmd}', function ($cmd) {
 Route::get('/admin', [LoginController::class, 'index']);
 Route::post('/admin/auth', [LoginController::class, 'login'])->name('admin-login');
 
-Route::group(['middleware'=>'admin_auth'],function(){
+Route::group(['middleware' => 'admin_auth'], function () {
     // Dashboard Route //////
-    Route::get('admin/dashboard',[DashboardController::class,'index']);
+    Route::get('admin/dashboard', [DashboardController::class, 'index']);
     // Category Route //////
-    Route::get('admin/category',[CategoryController::class,'index'])->name('admin-category');
-    Route::get('admin/add/category',[CategoryController::class,'create'])->name('admin-add-category');
+    Route::get('admin/category', [CategoryController::class, 'index'])->name('admin-category');
+    Route::get('admin/add/category', [CategoryController::class, 'create'])->name('admin-add-category');
     //Resource for Category
     Route::resource('admin/category', CategoryController::class, ['as' => 'admin']);
     Route::post('admin/category/pos', [CategoryController::class, 'position'])->name('admin.category.pos');
 
     //Resource for game
     Route::resource('admin/game', GameController::class);
+    Route::resource('admin/video', VideoController::class);
     Route::post('admin/game/toggle_mark_new', [GameController::class, 'toggleMarkNew'])->name('admin.game.toggle_mark_new');
     Route::post('admin/game/toggle_mark_popular', [GameController::class, 'toggleMarkPopular'])->name('admin.game.toggle_mark_popular');
 
@@ -69,16 +70,16 @@ Route::group(['middleware'=>'admin_auth'],function(){
     });
 
     ////Logout Route///
-    Route::get('/admin/logout', [LoginController::class,'logout'])->name('admin-logout');
+    Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin-logout');
 });
 ////Logout Route///
-Route::get('/admin/logout', [LoginController::class,'logout'])->name('admin-logout');
+Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin-logout');
 
 ////User Route////
 
-Route::get('admin/secreat',[LoginController::class,'secreat']);
-Route::post('user/register',[UserController::class,'register'])->name('user-register');
-Route::post('user/login',[UserController::class,'login'])->name('user-login');
+Route::get('admin/secreat', [LoginController::class, 'secreat']);
+Route::post('user/register', [UserController::class, 'register'])->name('user-register');
+Route::post('user/login', [UserController::class, 'login'])->name('user-login');
 Route::get('/category/{id}', [FrontController::class, 'category'])->name('home.category');
 
 Route::get('/language/{language}', [FrontController::class, 'language'])->name('home.language');
@@ -87,7 +88,7 @@ Route::get('/latest', [FrontController::class, 'latest'])->name('home.latest');
 Route::get('/popular', [FrontController::class, 'popular'])->name('home.popular');
 Route::get('/page/{id}', [FrontController::class, 'page'])->name('home.page');
 
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/play/{id}', [FrontController::class, 'play'])->name('home.play');
 });
-Route::get('/user/logout', [UserController::class,'logout'])->name('user-logout');
+Route::get('/user/logout', [UserController::class, 'logout'])->name('user-logout');
