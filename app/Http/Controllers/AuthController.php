@@ -57,13 +57,21 @@ class AuthController extends Controller
             return response()->json(["error" => $validator->messages()]);
             // $response['response'] = $validator->messages();
         }
-        if (!Auth::attempt(['phone' => $request->phone, 'password' => $request->pin], false)) {
-            return $this->error('Credentials not match', 401);
+        $user = User::where('phone', $request->phone)->first();
+
+        if ($user !== null && Hash::check($request->pin, $user->pin)) {
+            \Auth::login($user);
         }
 
-        return $this->success([
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
-        ]);
+        if (\Auth::check()) {
+
+            return $this->success([
+                'token' => auth()->user()->createToken('API Token')->plainTextToken
+            ]);
+        } else {
+
+            return response()->json(['errors' => ['login_error' => 'Login Failed']], 422);
+        }
     }
 
     public function logout()
