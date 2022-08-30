@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     use HasFactory;
+    public function scopeActive($q)
+    {
+        return $q->whereStatus(1);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Admin\Category::class);
+    }
 }

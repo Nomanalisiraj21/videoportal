@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
-use App\Models\Game;
+use App\Models\Video;
 use App\Models\Slider;
 use App\Models\Page;
 
@@ -15,19 +15,19 @@ class FrontController extends Controller
      */
 
     public function index()
-    { 
-        $new_games = Game::where('is_new', 1)->latest()->active()->take(20)->get();
-        $papular_games = Game::where('is_popular', 1)->latest()->active()->take(20)->get();
+    {
+        $new_games = Video::where('is_new', 1)->latest()->active()->take(20)->get();
+        $papular_games = Video::where('is_popular', 1)->latest()->active()->take(20)->get();
         // $foryou_games = Game::active()->take(15)->get();
         $sliders = Slider::where('status', 1)->get();
-        $cat_games = Category::active()->orderBy('index', 'asc')->orderBy('title', 'asc')->with(['games' => function($q){
-                return $q->latest()->active();
-            }])
+        $cat_games = Category::active()->orderBy('index', 'asc')->orderBy('title', 'asc')->with(['games' => function ($q) {
+            return $q->latest()->active();
+        }])
             ->whereHas('games')->take(7)->get();
 
         return view('front.index', ['sliders' => $sliders, 'new_games' => $new_games, 'papular_games' => $papular_games, 'cat_games' => $cat_games]);
     }
-    
+
     /**
      * Show category specific resource.
      */
@@ -35,8 +35,8 @@ class FrontController extends Controller
     {
         $cat = Category::findOrFail($id);
         // $cat_name = $category->title ?? 'Game';
-        $cat_games = Game::whereCategoryId($cat->id)->latest()->active()->get();
-        return view('front.category',['cat' => $cat, 'cat_games' => $cat_games]);
+        $cat_games = Video::whereCategoryId($cat->id)->latest()->active()->get();
+        return view('front.category', ['cat' => $cat, 'cat_games' => $cat_games]);
     }
 
     /**
@@ -44,7 +44,7 @@ class FrontController extends Controller
      */
     public function play($id)
     {
-        $game = Game::findOrFail($id);
+        $game = Video::findOrFail($id);
         return view('front.game', ['game' => $game]);
     }
 
@@ -53,14 +53,13 @@ class FrontController extends Controller
      */
     public function language($language)
     {
-        if($language == 'ar'){
+        if ($language == 'ar') {
             session()->put('lang', 'ar');
-        }else{
-            session()->put('lang', 'en');    
+        } else {
+            session()->put('lang', 'en');
         }
 
         return back();
-
     }
 
     /**
@@ -68,14 +67,13 @@ class FrontController extends Controller
      */
     public function theme($theme)
     {
-        if($theme == 'light'){
+        if ($theme == 'light') {
             session()->put('theme', 'light');
-        }else{
-            session()->put('theme', 'dark');    
+        } else {
+            session()->put('theme', 'dark');
         }
 
         return back();
-
     }
 
     /**
@@ -84,18 +82,18 @@ class FrontController extends Controller
     public function latest()
     {
         $cat = ['title' => 'New Games'];
-        $cat_games = Game::where('is_new', 1)->latest()->active()->get();
-        return view('front.category',['cat' => $cat, 'cat_games' => $cat_games]);
+        $cat_games = Video::where('is_new', 1)->latest()->active()->get();
+        return view('front.category', ['cat' => $cat, 'cat_games' => $cat_games]);
     }
-    
+
     /**
      * get new games
      */
     public function popular()
     {
         $cat = ['title' => 'Popular Games'];
-        $cat_games = Game::where('is_popular', 1)->latest()->active()->get();
-        return view('front.category',['cat' => $cat, 'cat_games' => $cat_games]);
+        $cat_games = Video::where('is_popular', 1)->latest()->active()->get();
+        return view('front.category', ['cat' => $cat, 'cat_games' => $cat_games]);
     }
 
     /**
@@ -104,7 +102,6 @@ class FrontController extends Controller
     public function page($id)
     {
         $page = Page::whereId($id)->active()->first();
-        return view('front.page',['page' => $page]);
+        return view('front.page', ['page' => $page]);
     }
-
 }

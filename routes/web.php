@@ -92,3 +92,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/play/{id}', [FrontController::class, 'play'])->name('home.play');
 });
 Route::get('/user/logout', [UserController::class, 'logout'])->name('user-logout');
+
+
